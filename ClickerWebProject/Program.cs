@@ -1,5 +1,6 @@
 using System.Runtime.CompilerServices;
 using ClickerWebProject.Domain;
+using ClickerWebProject.Infrastructure.Abstractions;
 using ClickerWebProject.Infrastructure.DataAccess;
 using ClickerWebProject.Initializers;
 using ClickerWebProject.Initilizers;
@@ -24,16 +25,16 @@ public class Program
 
         DbContextInitializer.InitializeDbContext(appDbContext);
 
-        app.MapControllers();
+        app.UseRouting();
 
-        app.UseMvc();
         app.UseAuthentication();
         app.UseAuthorization();
 
         app.UseSwagger();
         app.UseSwaggerUI();
 
-        app.MapGet("/", () => "Hello World!");
+        app.MapControllers();
+        app.MapDefaultControllerRoute();
         app.MapHealthChecks("health-check");
 
         app.Run();
@@ -43,11 +44,14 @@ public class Program
     {
         services.AddHealthChecks();
         services.AddSwaggerGen();
+
+        services.AddAutoMapper(typeof(Program).Assembly);
         services.AddMediatR(o => o.RegisterServicesFromAssembly(typeof(Program).Assembly));
         services.AddAuthentication();
         services.AddAuthorization();
-        services.AddMvcCore(o => o.EnableEndpointRouting = false)
-            .AddApiExplorer();
+        services.AddControllersWithViews();
+
+        services.AddScoped<IAppDbContext,AppDbContext>();
 
 
         IdentityInitializer.AddIdentity(services);
