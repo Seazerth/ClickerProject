@@ -22,12 +22,11 @@ namespace ClickerWebProject.Infrastructure.DataAccess
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-
             base.OnModelCreating(builder);
 
             builder.Entity<UserBoost>()
                 .HasOne(ub => ub.User)
-                .WithMany()
+                .WithMany(u => u.UserBoosts)
                 .HasForeignKey(ub => ub.UserId);
 
             builder.Entity<UserBoost>()

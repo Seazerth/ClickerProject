@@ -2,19 +2,38 @@
 
 <div>
     <div>
+        <h3>Свена копни, а не виспа, @Model.User.UserName</h3>
+        <h4>Нет, ты подуймай @Model.User.CurruntScore танго</h4>
+        <h4>Ты что уже @Model.User.RecordScore съел за все время</h4>
+        <h4>Твоя тычка: @Model.User.ProfitPerClick</h4>
+        <h4>Пассивный урон: @Model.User.ProfitPerSecond</h4>
+    </div>
+    <form asp-action="Click" asp-controller="Home" method="post">
+        <button type="sumbit">
+        <img src="~/gg.png" />
+        </button>
+    </form>
+    <div>
         <h3>Бусты</h3>
         @foreach (var boost in Model.Boosts)
         {
+            var userBoost = Model.User.UserBoosts.FirstOrDefault(ub => ub.BoostId == boost.Id);
+            var price = userBoost?.CurentPrice ?? boost.Price;
+            var quantity = userBoost?.Quantity ?? 0;
+
             <button>
                 <h4>@boost.Title</h4>
                 <img src="data:image/png;base64, @Convert.ToBase64String(boost.Image)" />
-                <h5>Цена: @boost.Price</h5>
+                <h5>Цена: @price</h5>
                 <h5>
                     Доход: @boost.Profit
                     @if (boost.IsAuto)
                     {
                         <span> в секунду</span>
                     }
+                </h5>
+                <h5>
+                    Количество предметов: @quantity
                 </h5>
             </button>
         }

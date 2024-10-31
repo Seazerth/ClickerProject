@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
-namespace ClickerWebProject.UseCases.Login.Logout;
+namespace ClickerWebProject.UseCases.Logout;
 
 public class LogoutCommandHandler : IRequestHandler<LogoutCommand, Unit>
 {

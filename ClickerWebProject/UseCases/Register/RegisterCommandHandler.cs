@@ -16,10 +16,9 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, Unit>
 
     public async Task<Unit> Handle(RegisterCommand request, CancellationToken cancellationToken)
     {
-
         if (userManager.Users.Any(u => u.UserName == request.UserName))
         {
-            throw new ValidationException("Such user already exists. ");
+            throw new ValidationException("Such user already exists.");
         }
 
         var user = new ApplicationUser
@@ -30,7 +29,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, Unit>
         var result = await userManager.CreateAsync(user, request.Password);
 
         if (!result.Succeeded)
-        { 
+        {
             var errorString = string.Join(Environment.NewLine, result.Errors);
             throw new ValidationException(errorString);
         }

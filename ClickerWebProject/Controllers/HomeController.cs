@@ -1,4 +1,6 @@
-﻿using ClickerWebProject.UseCases.GetBoosts;
+﻿using ClickerWebProject.UseCases.AddPoints;
+using ClickerWebProject.UseCases.GetBoosts;
+using ClickerWebProject.UseCases.GetCurrentUser;
 using ClickerWebProject.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -18,11 +20,23 @@ public class HomeController : Controller
     {
 		var boosts = await mediator.Send(new GetBoostsQuery());
 
+		var user = await mediator.Send(new GetCurrentUserQuery());
+
 		var ViewModel = new IndexViewModel()
 		{
 			Boosts = boosts,
+			User = user,
 		};
 
         return View(ViewModel);
     }
+
+	[HttpPost("click")]
+	public async Task<IActionResult> Click()
+	{
+
+		await mediator.Send(new AddPointsCommand(Times: 1));
+
+		return RedirectToAction(nameof(Index));
+	}
 }

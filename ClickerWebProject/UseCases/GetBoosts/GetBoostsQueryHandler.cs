@@ -19,7 +19,8 @@ public class GetBoostsQueryHandler : IRequestHandler<GetBoostsQuery, IReadOnlyCo
 
     public async Task<IReadOnlyCollection<GetBoostsDto>> Handle(GetBoostsQuery request, CancellationToken cancellationToken)
     {
-        return await mapper.ProjectTo<GetBoostsDto>(appDbContext.Boosts)
+        return await mapper
+            .ProjectTo<GetBoostsDto>(appDbContext.Boosts)
             .ToArrayAsync();
     }
 }

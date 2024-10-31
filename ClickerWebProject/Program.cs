@@ -2,6 +2,7 @@ using System.Runtime.CompilerServices;
 using ClickerWebProject.Domain;
 using ClickerWebProject.Infrastructure.Abstractions;
 using ClickerWebProject.Infrastructure.DataAccess;
+using ClickerWebProject.Infrastructure.Implementations;
 using ClickerWebProject.Initializers;
 using ClickerWebProject.Initilizers;
 using Microsoft.AspNetCore.Identity;
@@ -30,6 +31,7 @@ public class Program
         app.UseAuthentication();
         app.UseAuthorization();
 
+        app.UseStaticFiles();
         app.UseSwagger();
         app.UseSwaggerUI();
 
@@ -47,10 +49,12 @@ public class Program
 
         services.AddAutoMapper(typeof(Program).Assembly);
         services.AddMediatR(o => o.RegisterServicesFromAssembly(typeof(Program).Assembly));
+        
         services.AddAuthentication();
         services.AddAuthorization();
         services.AddControllersWithViews();
 
+        services.AddScoped<ICurrentUserAccessor, CurrentUserAccessor>();
         services.AddScoped<IAppDbContext,AppDbContext>();
 
 

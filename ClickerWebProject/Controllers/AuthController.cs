@@ -3,7 +3,7 @@
 
 using System.ComponentModel.DataAnnotations;
 using ClickerWebProject.UseCases.Login;
-using ClickerWebProject.UseCases.Login.Logout;
+using ClickerWebProject.UseCases.Logout;
 using ClickerWebProject.UseCases.Register;
 using ClickerWebProject.ViewModels;
 using MediatR;
@@ -31,15 +31,18 @@ public class AuthController : Controller
         catch (ValidationException ex)
         {
             ModelState.AddModelError(string.Empty, ex.Message);
+
+            var viewModel = new AuthViewModel
+            {
+                UserName = command.UserName,
+                Password = command.Password,
+            };
+
+            return View(viewModel);
         }
 
-        var viewModel = new AuthViewModel
-        {
-            UserName = command.UserName,
-            Password = command.Password,
-        };
-
-        return View(viewModel);
+        return RedirectToAction("Login");
+        
     }
 
     [HttpGet("register")]

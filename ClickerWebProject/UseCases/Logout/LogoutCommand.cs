@@ -1,5 +1,5 @@
 ﻿using MediatR;
 
-namespace ClickerWebProject.UseCases.Login.Logout;
+namespace ClickerWebProject.UseCases.Logout;
 
 public record LogoutCommand : IRequest<Unit>;
