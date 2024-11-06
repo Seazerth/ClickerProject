@@ -41,7 +41,7 @@ public class AuthController : Controller
             return View(viewModel);
         }
 
-        return RedirectToAction("Login");
+        return RedirectToAction(nameof(Login));
         
     }
 

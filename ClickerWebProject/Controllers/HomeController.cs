@@ -3,10 +3,12 @@ using ClickerWebProject.UseCases.GetBoosts;
 using ClickerWebProject.UseCases.GetCurrentUser;
 using ClickerWebProject.ViewModels;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClickerWebProject.Controllers;
 
+[Authorize]
 public class HomeController : Controller
 {
     private readonly IMediator mediator;
